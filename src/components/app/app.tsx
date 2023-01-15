@@ -3,7 +3,13 @@ import React, { Component } from 'react';
 import './app.scss';
 
 export default class App extends Component {
+  state = {
+    text: 'this is TypeScript app',
+  };
+
   render() {
-    return <div className="App">this is TypeScript app</div>;
+    const { text } = this.state;
+
+    return <div className="app">{text}</div>;
   }
 }
