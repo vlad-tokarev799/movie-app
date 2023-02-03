@@ -1,12 +1,20 @@
 import React from 'react';
 import ReactDOM from 'react-dom/client';
 
-import App from './components/app';
+import { Provider } from 'react-redux';
+
+import App from './components/app/app';
+import { store } from './store/store';
+import NetworkState from './components/network-status/network-state';
 
 const root = ReactDOM.createRoot(document.getElementById('root') as HTMLElement);
 
 root.render(
   <React.StrictMode>
-    <App />
+    <Provider store={store}>
+      <NetworkState>
+        <App />
+      </NetworkState>
+    </Provider>
   </React.StrictMode>
 );

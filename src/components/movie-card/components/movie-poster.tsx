@@ -1,7 +1,7 @@
 import React from 'react';
 import { Image } from 'antd';
 
-const MoviePoster = (props: { path: string }) => {
+const MoviePoster: React.FC<{ path: string }> = (props) => {
   return (
     <>
       <Image

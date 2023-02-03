@@ -1,8 +1,8 @@
 import React from 'react';
 import { format } from 'date-fns';
-import { ReleaseDate } from '../../../services/movie-db-service';
+import { ReleaseDate } from '../../../movie-api/types';
 
-const MovieReleaseDate = (props: { releaseDate: ReleaseDate }) => {
+const MovieReleaseDate: React.FC<{ releaseDate: ReleaseDate }> = (props) => {
   const hasReleaseDate = props.releaseDate !== 0;
   const releaseDateFormat = hasReleaseDate ? format(props.releaseDate, 'PP') : 'unknown';
 
