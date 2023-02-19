@@ -1,30 +1,17 @@
-import React, { useEffect, useState } from 'react';
-import { RootState } from '../../store/store';
+import React from 'react';
 import { useAppSelector } from '../../store/hooks';
-import { MovieObject } from '../../movie-api/types';
+import { MovieObject } from '../../types/movies';
 
 import './movie-list.scss';
 
 import MovieCard from '../movie-card/movie-card';
 import { Spin } from 'antd';
+import { selectLoading, selectMovies } from '../../store/reducers/movies-reducer';
 
-const MovieList: React.FC = () => {
-  const [loading, setLoading] = useState(true);
-  const movies = useAppSelector((state: RootState) => state.movies.movies);
-
-  useEffect(() => {
-    if (movies.length) {
-      setLoading(false);
-    }
-  });
-
-  const movieCards = movies.length ? (
-    movies.map((movie: MovieObject) => {
-      return <MovieCard {...movie} key={movie.id} />;
-    })
-  ) : (
-    <p className={'movie-list__not-found'}>Movies not found</p>
-  );
+const MovieList = () => {
+  const loading = useAppSelector(selectLoading);
+  const movies = useAppSelector(selectMovies);
+  const isEmpty = !movies.length;
 
   if (loading) {
     return (
@@ -33,6 +20,18 @@ const MovieList: React.FC = () => {
       </div>
     );
   }
+
+  if (isEmpty) {
+    return (
+      <div className="movie-list_empty">
+        <p className={'movie-list__not-found'}>Movies not found</p>
+      </div>
+    );
+  }
+
+  const movieCards = movies.map((movie: MovieObject) => {
+    return <MovieCard {...movie} key={movie.id} />;
+  });
 
   return <div className="movie-list">{movieCards}</div>;
 };

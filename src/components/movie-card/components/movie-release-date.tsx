@@ -1,12 +1,17 @@
-import React from 'react';
+import React, { ReactElement } from 'react';
 import { format } from 'date-fns';
-import { ReleaseDate } from '../../../movie-api/types';
+import { ReleaseDate } from '../../../types/core';
 
-const MovieReleaseDate: React.FC<{ releaseDate: ReleaseDate }> = (props) => {
-  const hasReleaseDate = props.releaseDate !== 0;
-  const releaseDateFormat = hasReleaseDate ? format(props.releaseDate, 'PP') : 'unknown';
+type MovieReleaseDateType = (props: { releaseDate: ReleaseDate }) => ReactElement;
 
-  return <p>{releaseDateFormat}</p>;
+function isValidDate(d: any) {
+  return d instanceof Date && !isNaN(d as unknown as number);
+}
+
+const MovieReleaseDate: MovieReleaseDateType = (props) => {
+  const releaseDate = new Date(props.releaseDate);
+
+  return <p>{isValidDate(releaseDate) ? format(releaseDate, 'PP') : 'unknown'}</p>;
 };
 
 export default MovieReleaseDate;

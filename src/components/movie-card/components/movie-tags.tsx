@@ -1,9 +1,27 @@
-import React from 'react';
-import { Tag } from 'antd';
-import { GenreObject } from '../../../movie-api/types';
+import React, { useEffect, useState } from 'react';
 
-const MovieTags: React.FC<{ genres: GenreObject[] }> = (props: { genres: GenreObject[] }) => {
-  const genreElements = props.genres.map((genre: GenreObject) => <Tag key={genre.id}>{genre.name}</Tag>);
+import { GenreObject } from '../../../types/genres';
+import { useAppSelector } from '../../../store/hooks';
+import { selectGenres } from '../../../store/reducers/genres-reducer';
+
+import { Tag } from 'antd';
+
+const MovieTags = (props: { genreIds: number[] }) => {
+  const [genres, setGenres] = useState<GenreObject[]>([]);
+  const allGenres = useAppSelector(selectGenres);
+  const { genreIds } = props;
+
+  useEffect(() => {
+    const filteredGenres = allGenres.filter((genre) => {
+      return genreIds.includes(genre.id);
+    });
+
+    setGenres(filteredGenres);
+  }, [allGenres, genreIds]);
+
+  const genreElements = genres.map((genre: GenreObject) => {
+    return <Tag key={genre.id}>{genre.name}</Tag>;
+  });
 
   return <div className="movie-card__tags">{genreElements}</div>;
 };

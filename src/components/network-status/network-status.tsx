@@ -2,7 +2,7 @@ import React, { PropsWithChildren, useEffect } from 'react';
 import { useAppDispatch } from '../../store/hooks';
 import { removeError, setError } from '../../store/reducers/error-reducer';
 
-function NetworkState(props: PropsWithChildren) {
+function NetworkStatus(props: PropsWithChildren) {
   const { children } = props;
   const dispatch = useAppDispatch();
 
@@ -32,4 +32,4 @@ function NetworkState(props: PropsWithChildren) {
   return <>{children}</>;
 }
 
-export default NetworkState;
+export default NetworkStatus;

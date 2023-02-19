@@ -1,34 +1,52 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { Input, Pagination } from 'antd';
 import MovieList from '../movie-list/movie-list';
 import { debounce } from 'lodash';
-import { useMovies } from '../../movie-api/hooks';
-import { useAppSelector } from '../../store/hooks';
-import { selectPage, selectQuery, selectTotalPages } from '../../store/reducers/movies-reducer';
+import { useAppDispatch, useAppSelector } from '../../store/hooks';
+import { fetchMovies, selectPage, selectQuery, selectTotalPages } from '../../store/reducers/movies-reducer';
+import { fetchGenres } from '../../store/reducers/genres-reducer';
+
+import './search.scss';
 
 const Search = () => {
-  const getMovies = useMovies();
-  const totalPages = useAppSelector(selectTotalPages);
-  const searchQuery = useAppSelector(selectQuery);
-  const currentPage = useAppSelector(selectPage);
+  const dispatch = useAppDispatch();
 
-  const onSearchInput = debounce((e: React.BaseSyntheticEvent) => {
-    const targetInput: HTMLInputElement = e.target;
-    getMovies(targetInput.value);
+  const totalPages = useAppSelector(selectTotalPages);
+  const currentPage = useAppSelector(selectPage);
+  const currentQuery = useAppSelector(selectQuery);
+
+  useEffect(() => {
+    dispatch(fetchMovies({ query: 'return', page: 1 }));
+    dispatch(fetchGenres());
+  }, []);
+
+  const searchMovie = debounce(function (query: string) {
+    dispatch(fetchMovies({ query, page: 1 }));
   }, 500);
+
+  const onSearchInput = (e: React.BaseSyntheticEvent) => {
+    const targetInput: HTMLInputElement = e.target;
+    const query = targetInput.value;
+
+    if (query) {
+      searchMovie(query);
+    } else {
+      searchMovie('return');
+    }
+  };
 
   const paginationHandler = (page: number) => {
     window.scrollTo({ top: 0, behavior: 'smooth' });
-    getMovies(searchQuery, page);
+    dispatch(fetchMovies({ query: currentQuery, page }));
   };
 
   return (
-    <div>
+    <div className={'search'}>
       <Input placeholder="Type to search" size="large" onChange={onSearchInput} />
       <MovieList />
       <Pagination
         showSizeChanger={false}
-        showQuickJumper
+        // showQuickJumper
         onChange={paginationHandler}
         current={currentPage}
         total={totalPages}

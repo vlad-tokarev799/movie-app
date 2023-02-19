@@ -1,9 +1,4 @@
-export type MoviesResponse = {
-  page: number;
-  results: MovieResponseObject[];
-  total_pages: number;
-  total_results: number;
-};
+import { ReleaseDate } from './core';
 
 export type MovieResponseObject = {
   adult: boolean;
@@ -26,14 +21,8 @@ export type MovieObject = {
   id: number;
   title: string;
   posterPath: string;
-  genres: GenreObject[];
   releaseDate: ReleaseDate;
   overview: string;
+  usersRating: number;
+  genreIds: number[];
 };
-
-export type GenreObject = {
-  id: number;
-  name: string;
-};
-
-export type ReleaseDate = Date | number;
