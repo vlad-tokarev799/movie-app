@@ -14,7 +14,9 @@ import { RatingRing } from '../rating-ring/rating-ring';
 
 const { Title, Paragraph } = Typography;
 
-const MovieCard = (props: MovieObject) => {
+type Props = MovieObject;
+
+const MovieCard = (props: Props) => {
   const { title, overview, genreIds, posterPath, releaseDate, usersRating, id } = props;
   const ratedMovies = useAppSelector(selectRated);
   const dispatch = useAppDispatch();

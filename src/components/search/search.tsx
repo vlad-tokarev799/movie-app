@@ -46,7 +46,6 @@ const Search = () => {
       <MovieList />
       <Pagination
         showSizeChanger={false}
-        // showQuickJumper
         onChange={paginationHandler}
         current={currentPage}
         total={totalPages}

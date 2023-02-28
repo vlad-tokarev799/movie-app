@@ -1,7 +1,11 @@
 import React from 'react';
 import { Image } from 'antd';
 
-const MoviePoster = (props: { path: string }) => {
+type Props = {
+  path: string;
+};
+
+const MoviePoster = (props: Props) => {
   const posterSize = {
     w: 187,
     h: 278,

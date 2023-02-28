@@ -6,7 +6,11 @@ import { selectGenres } from '../../../store/reducers/genres-reducer';
 
 import { Tag } from 'antd';
 
-const MovieTags = (props: { genreIds: number[] }) => {
+type Props = {
+  genreIds: number[];
+};
+
+const MovieTags = (props: Props) => {
   const [genres, setGenres] = useState<GenreObject[]>([]);
   const allGenres = useAppSelector(selectGenres);
   const { genreIds } = props;
