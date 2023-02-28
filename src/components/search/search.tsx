@@ -46,11 +46,11 @@ const Search = () => {
       <MovieList />
       <Pagination
         showSizeChanger={false}
-        onChange={paginationHandler}
+        pageSize={1}
         current={currentPage}
         total={totalPages}
+        onChange={paginationHandler}
         hideOnSinglePage
-        defaultPageSize={1}
       />
     </div>
   );

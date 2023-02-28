@@ -19,8 +19,11 @@ export const ratedSlice = createSlice({
   reducers: {
     addRate: (state, action: PayloadAction<RatedMovie>) => {
       const { id } = action.payload;
+      const rateIsSetted = state.ratedMoviesMap.includes(id);
 
-      state.ratedMoviesMap = [id, ...state.ratedMoviesMap];
+      if (!rateIsSetted) {
+        state.ratedMoviesMap = [id, ...state.ratedMoviesMap];
+      }
       state.ratedMovies = {
         ...state.ratedMovies,
         [id]: action.payload,
